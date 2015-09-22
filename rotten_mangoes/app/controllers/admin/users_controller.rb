@@ -1,9 +1,9 @@
 class Admin::UsersController < ApplicationController
-
+  binding.pry
   before_action :check_if_admin
 
   def index
-    render text: "an admin"
+    @users = User.page(params[:page]).per(5)
   end
 
   def new
@@ -13,21 +13,28 @@ class Admin::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      session[:user_id] = @user.id
-      redirect_to movies_path, notice: "Welcome aboard, #{@user.firstname}"
+      redirect_to new_admin_user_path, notice: "Added user, #{@user.firstname}"
     else
-      render :new
+      render :page
     end
+  end
+
+  def show
+
   end
 
   private
 
   def check_if_admin
-
+    @user = User.find(session[:user_id]) if session[:user_id]
+    unless @user.is_admin
+      flash[:notice] = "You went to the wrong place so we sent you here!"
+      redirect_to new_admin_user_path
+    end
   end
 
   def user_params
-    params.require(:user).permit(:email,:firstname, :lastname, :password, :password_confirmation)
+    params.require(:user).permit(:email,:firstname, :lastname, :password, :password_confirmation, :is_admin)
   end
 
 end

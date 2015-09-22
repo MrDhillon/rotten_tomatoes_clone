@@ -1,0 +1,8 @@
+<% @review = Review.user_reviews(params[:id]) %>
+<% if @review %>
+  <% @review.each do |review| %>
+    <p><%= review.text %></p>
+    <%end%>
+  <%else%>
+    <p>no reviews found</p>
+<%end%>

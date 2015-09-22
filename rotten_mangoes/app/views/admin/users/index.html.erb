@@ -1,0 +1,36 @@
+<small>
+    <% if current_user %>
+      <%if current_user.is_admin %>
+      <% else %>
+        <%= flash[:notice] = "You dont belong here" %>
+        <% redirect_to movies_path %>
+      <%end%>
+    <% else %>
+    <% end %>
+</small>
+<%= link_to "Add users", new_admin_user_path %>
+<div>
+  <%= paginate @users %>
+</div>
+<div>
+  <h1>Users</h1>
+  <% list = 0 %>
+  <table style="width:100%">
+  <tr>
+    <th>Firstname</th>
+    <th>Lastname</th>
+    <th>Email</th>
+    <th>User Reviews</th>
+    <th>Admin User</th>
+  </tr>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.firstname %></td>
+        <td><%= user.lastname %></td>
+        <td><%= user.email %></td>
+        <td><%= link_to "user reviews", admin_user_path(user.id) %> </td>
+         <td><%= user.is_admin %></td>
+      </tr>
+    <%end%>
+  </table>
+</div>
