@@ -22,6 +22,7 @@
     <th>Email</th>
     <th>User Reviews</th>
     <th>Admin User</th>
+    <th>Delete User</th>
   </tr>
     <% @users.each do |user| %>
       <tr>
@@ -29,7 +30,8 @@
         <td><%= user.lastname %></td>
         <td><%= user.email %></td>
         <td><%= link_to "user reviews", admin_user_path(user.id) %> </td>
-         <td><%= user.is_admin %></td>
+        <td><%= user.is_admin %></td>
+        <td><%= link_to "Delete", admin_user_path(user.id), :method => :delete, :data => {:confirm => "Are you sure?"} %> </td>
       </tr>
     <%end%>
   </table>

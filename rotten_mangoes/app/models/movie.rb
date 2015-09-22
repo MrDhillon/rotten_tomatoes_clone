@@ -17,6 +17,12 @@ class Movie < ActiveRecord::Base
     end
   end
 
+  def self.search(query)
+    movies = Movie.where("title like ?", query[:title])
+    movies = movies.where("director like ?", query[:director]) unless query[:director].blank?
+
+  end
+
   protected
 
   def release_date_is_in_the_future
