@@ -9,7 +9,7 @@ class ReviewsController < ApplicationController
   end
 
   def create
-      # @movies = Movie.find(params[:movie_id])
+      @movies = Movie.find(params[:movie_id])
       @review = @movies.reviews.build(review_params)
       @review.user_id = current_user.id
 
