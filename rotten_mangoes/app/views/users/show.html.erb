@@ -1,0 +1,10 @@
+<%= link_to "Back to all movies", movies_path %><br/>
+<h2>User profile for <%= @user.full_name %> </h2>
+<h3>User email is <%= @user.email %></h3>
+<h2>Review by <%= @user.full_name %></h2>
+<% @reviews = Review.where(user_id: @user.id) %>
+<% @reviews.each do |review| %>
+  <% @movie = Movie.find(review.movie_id) %>
+  <h3>Review for <%= @movie.title %></h2>
+  <p><%= review.text %></p>
+<% end %>

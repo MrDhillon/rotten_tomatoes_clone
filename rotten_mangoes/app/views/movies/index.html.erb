@@ -1,10 +1,15 @@
 <h1>Movies#index</h1>
 <p>Find me in app/views/movies/index.html.erb</p>
+<%= link_to "Back to all movies", movies_path %><br/>
 
 <%= form_tag movies_path, :method => 'get' do %>
-  <%= text_field_tag :title, placeholder="title" %> <!-- text_field_tag :search, params[:search] -->
-  <%= text_field_tag :director, "director" %>
-  <%= submit_tag("Search") %>
+  <%= text_field_tag :title, nil,placeholder: "title" %> <!-- text_field_tag :search, params[:search] -->
+  <%= text_field_tag :director, nil, placeholder: "director" %>
+  <%= label_tag(:duration, "Duration:") %>
+ <%= select_tag :duration, "<option value='90'>Less than 90 minutes</option>
+                            <option value='100'>90 to 120 minutes</option>
+                            <option value='120'>More than 120 minutes</option>".html_safe %>
+ <%= submit_tag("Search") %>
 <% end %>
 
 <p><%= link_to "Submit a Movie", new_movie_path %></p>

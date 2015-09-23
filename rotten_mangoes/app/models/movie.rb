@@ -12,8 +12,10 @@ class Movie < ActiveRecord::Base
   def review_average
     if reviews.size > 0
     reviews.sum(:rating_out_of_ten)/reviews.size
-    else
+    elsif !reviews.empty?
       reviews.rating_out_of_ten
+    else
+      "No reviews"
     end
   end
 
@@ -21,6 +23,13 @@ class Movie < ActiveRecord::Base
     @movies = Movie.all
     @movies = @movies.where("title like ?", query[:title]) if query[:title].present?
     @movies = @movies.where("director like ?", query[:director]) if query[:director].present?
+    if query[:duration].present? && query[:duration] == "90"
+      @movies = @movies.where("runtime_in_minutes < ?" , query[:duration]) if query[:duration].present?
+    elsif  query[:duration].present? && query[:duration] == "120"
+      @movies = @movies.where("runtime_in_minutes > ?" , query[:duration]) if query[:duration].present?
+    elsif  query[:duration].present? && query[:duration] == "100"
+      @movies = @movies.where("runtime_in_minutes > ? AND runtime_in_minutes < ?" , 90, 120) if query[:duration].present?
+    end
     return @movies
   end
 
