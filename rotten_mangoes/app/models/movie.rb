@@ -18,7 +18,10 @@ class Movie < ActiveRecord::Base
   end
 
   def self.search(query)
-
+    @movies = Movie.all
+    @movies = @movies.where("title like ?", query[:title]) if query[:title].present?
+    @movies = @movies.where("director like ?", query[:director]) if query[:director].present?
+    return @movies
   end
 
   protected

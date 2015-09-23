@@ -1,10 +1,7 @@
 class MoviesController < ApplicationController
   def index
     if params[:title]
-        @movies = Movie.all
-        @movies = @movies.where("title like ?", params[:title]) if params[:title].present?
-        @movies = @movies.where("director like ?", params[:director]) if params[:director].present?
-      binding.pry
+      @movies = Movie.search(params)
       render :index
     else
       @movies = Movie.all
