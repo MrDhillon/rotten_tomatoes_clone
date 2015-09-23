@@ -18,8 +18,6 @@ class Movie < ActiveRecord::Base
   end
 
   def self.search(query)
-    movies = Movie.where("title like ?", query[:title])
-    movies = movies.where("director like ?", query[:director]) unless query[:director].blank?
 
   end
 

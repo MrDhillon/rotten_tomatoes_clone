@@ -2,10 +2,9 @@
 <p>Find me in app/views/movies/index.html.erb</p>
 
 <%= form_tag movies_path, :method => 'get' do %>
-<%= text_field_tag :title, "title" %> <!-- text_field_tag :search, params[:search] -->
-<%= text_field_tag :director, "director" %>
-<%= select_tag 'runtime_in_minutes', options_for_select('runtime_in_minutes') %>
-<%= submit_tag("Search") %>
+  <%= text_field_tag :title, placeholder="title" %> <!-- text_field_tag :search, params[:search] -->
+  <%= text_field_tag :director, "director" %>
+  <%= submit_tag("Search") %>
 <% end %>
 
 <p><%= link_to "Submit a Movie", new_movie_path %></p>
