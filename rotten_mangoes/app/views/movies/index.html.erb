@@ -8,7 +8,7 @@
   <%= label_tag(:duration, "Duration:") %>
  <%= select_tag :duration, "<option value='90'>Less than 90 minutes</option>
                             <option value='100'>90 to 120 minutes</option>
-                            <option value='120'>More than 120 minutes</option>".html_safe %>
+                            <option value='120'>More than 120 minutes</option>".html_safe, class: "browser-default"%>
  <%= submit_tag("Search") %>
 <% end %>
 
