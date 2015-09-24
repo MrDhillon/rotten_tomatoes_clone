@@ -8,6 +8,12 @@ class Movie < ActiveRecord::Base
   validates :release_date, presence: true
   validate :release_date_is_in_the_future
   mount_uploader :image, ImageUploader
+  scope :search_title, -> (term) {where("title like ?", term)}
+  scope :search_director, -> (term) {where("director like ?", term)}
+  scope :search_under_90, -> (term) {where("runtime_in_minutes < ?", term)}
+  scope :search_bwt_90_120, -> {where("runtime_in_minutes > ? AND runtime_in_minutes < ?" , 90, 120)}
+  scope :search_over_120, -> (term) {where("runtime_in_minutes > ?" , term)}
+
 
   def review_average
     if reviews.size > 0
@@ -21,14 +27,14 @@ class Movie < ActiveRecord::Base
 
   def self.search(query)
     @movies = Movie.all
-    @movies = @movies.where("title like ?", query[:title]) if query[:title].present?
-    @movies = @movies.where("director like ?", query[:director]) if query[:director].present?
+    @movies = @movies.search_title(query[:title]) if query[:title].present?
+    @movies = @movies.search_director(query[:director]) if query[:director].present?
     if query[:duration].present? && query[:duration] == "90"
-      @movies = @movies.where("runtime_in_minutes < ?" , query[:duration]) if query[:duration].present?
+      @movies = @movies.search_under_90(query[:duration]) if query[:duration].present?
     elsif  query[:duration].present? && query[:duration] == "120"
-      @movies = @movies.where("runtime_in_minutes > ?" , query[:duration]) if query[:duration].present?
+      @movies = @movies.search_over_120(query[:duration]) if query[:duration].present?
     elsif  query[:duration].present? && query[:duration] == "100"
-      @movies = @movies.where("runtime_in_minutes > ? AND runtime_in_minutes < ?" , 90, 120) if query[:duration].present?
+      @movies = @movies.search_bwt_90_120 if query[:duration].present?
     end
     return @movies
   end

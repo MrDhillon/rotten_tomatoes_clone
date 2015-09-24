@@ -6,7 +6,8 @@
   <%= text_field_tag :title, nil,placeholder: "title" %> <!-- text_field_tag :search, params[:search] -->
   <%= text_field_tag :director, nil, placeholder: "director" %>
   <%= label_tag(:duration, "Duration:") %>
- <%= select_tag :duration, "<option value='90'>Less than 90 minutes</option>
+<%= select_tag :duration, " <option value=''>Filter by Duration</option>
+                            <option value='90'>Less than 90 minutes</option>
                             <option value='100'>90 to 120 minutes</option>
                             <option value='120'>More than 120 minutes</option>".html_safe, class: "browser-default"%>
  <%= submit_tag("Search") %>

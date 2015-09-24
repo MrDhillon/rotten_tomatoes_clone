@@ -1,6 +1,6 @@
 class MoviesController < ApplicationController
   def index
-    if params[:title]
+    if !params.empty?
       @movies = Movie.search(params)
       render :index
     else
